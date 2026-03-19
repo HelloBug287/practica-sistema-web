@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 
 class ProductoController extends Controller
 {
-    // 1. index() — listar todos (Proporcionado por el documento)
+    // index() — listar todos 
     public function index() {
         $productos = Producto::all();
         return view('productos.index', compact('productos'));
     }
 
-    // 2. create() — mostrar formulario de creación (Completado)
+    // create() — mostrar formulario de creación 
     public function create() {
         // Solo necesita retornar la vista del formulario vacío
         return view('productos.create');
     }
 
-    // 3. store() — guardar nuevo (Proporcionado por el documento)
-    public function store(Request $request) {
+    // store() — guardar nuevo 
+    public function store(ProductRequest $request) {
         $request->validate([
             'nombre' => 'required|string|max:100',
             'precio' => 'required|numeric|min:0',
@@ -44,7 +44,7 @@ class ProductoController extends Controller
     }
 
     // update() — actualizar en la base de datos 
-    public function update(Request $request, Producto $producto) {
+    public function update(ProductRequest $request, Producto $producto) {
         $request->validate([
             'nombre' => 'required|string|max:100',
             'precio' => 'required|numeric|min:0',
