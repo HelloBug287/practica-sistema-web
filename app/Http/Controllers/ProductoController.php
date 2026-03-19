@@ -21,8 +21,15 @@ class ProductoController extends Controller
 
     // 3. store() — guardar nuevo (Proporcionado por el documento)
     public function store(Request $request) {
+        $request->validate([
+            'nombre' => 'required|string|max:100',
+            'precio' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'descripcion' => 'nullable|string|max:500',
+        ]);
         Producto::create($request->all());
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')
+                ->with('success', 'Producto creado exitosamente.');
     }
 
     
@@ -38,13 +45,21 @@ class ProductoController extends Controller
 
     // update() — actualizar en la base de datos 
     public function update(Request $request, Producto $producto) {
+        $request->validate([
+            'nombre' => 'required|string|max:100',
+            'precio' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'descripcion' => 'nullable|string|max:500',
+        ]);
         $producto->update($request->all());
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')
+                ->with('success', 'Producto actualizado exitosamente.');
     }
 
     // destroy() — eliminar de la base de datos 
     public function destroy(Producto $producto) {
         $producto->delete();
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.index')
+                ->with('success', 'Producto eliminado exitosamente.');
     }
 }
