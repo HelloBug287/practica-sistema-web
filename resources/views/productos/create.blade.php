@@ -30,12 +30,24 @@
                 <br><span style="color:red;">{{ $message }}</span>
             @enderror
         </div>
+
+        <div>
+            <label>Categoría:</label><br>
+            <select name="categoria_id" required>
+                <option value="">Selecciona una categoría</option>
+                @foreach($categorias as $cat)
+                <option value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
         <br>
+
         <div>
             <label for="descripcion">Descripción:</label><br>
             <textarea id="descripcion" name="descripcion" placeholder="Descripción del producto" >{{ old('descripcion') }}</textarea>
         </div>
         <br>
+
         <div>
             <label for="precio">Precio:</label><br>
             <input type="number" step="0.01" id="precio" name="precio" placeholder="Precio" required value="{{ old('precio') }}">
@@ -44,6 +56,7 @@
             @enderror
         </div>
         <br>
+
         <div>
             <label for="stock">Stock:</label><br>
             <input type="number" id="stock" name="stock" placeholder="Stock" required value="{{ old('stock') }}">

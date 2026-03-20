@@ -27,6 +27,7 @@
                 <td>{{ $producto->id }}</td>
                 <td>{{ $producto->nombre }}</td>
                 <td>{{ $producto->descripcion }}</td>
+                <td>{{ $producto->categoria->nombre ?? 'Sin categoria '}}</td>
                 <td>{{ $producto->precio }}</td>
                 <td>{{ $producto->stock }}</td>
                 <td>

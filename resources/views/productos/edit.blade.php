@@ -33,6 +33,18 @@
         <br>
 
         <div>
+            <label>Categoría:</label><br>
+            <select name="categoria_id" required>
+                @foreach($categorias as $cat)
+                <option value="{{ $cat->id }}" {{ old('categoria_id', $producto->categoria_id) == $cat->id ? 'selected' : '' }}>
+                    {{ $cat->nombre }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+        <br>
+
+        <div>
             <label for="descripcion">Descripción:</label><br>
             <textarea id="descripcion" name="descripcion">{{ old('descripcion', $producto->descripcion) }}</textarea>
             @error('descripcion')
