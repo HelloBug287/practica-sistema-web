@@ -10,6 +10,17 @@
     <a href="{{ route('productos.create') }}">Crear Nuevo Producto</a>
     <br><br>
 
+    <div style="text-align: right; margin-bottom: 20px;">
+    <span>Bienvenido, <strong>{{ Auth::user()->name }}</strong> ({{ Auth::user()->rol }})</span>
+    
+    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+        @csrf
+        <button type="submit" class="btn btn-danger btn-sm" style="margin-left: 10px;">
+            Cerrar Sesión
+        </button>
+    </form>
+</div>
+
     <table border="1">
         <thead>
             <tr>
