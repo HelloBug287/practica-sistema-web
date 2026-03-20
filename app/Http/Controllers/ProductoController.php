@@ -41,8 +41,9 @@ class ProductoController extends Controller
 
     // edit() — mostrar formulario de edición 
     public function edit(Producto $producto) {
+        $categorias = Categoria::all();
         // Retorna la vista de edición pasándole el producto que se va a editar
-        return view('productos.edit', compact('producto'));
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     // update() — actualizar en la base de datos 
