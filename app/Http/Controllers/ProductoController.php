@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use App\Http\Requests\ProductRequest;
+use App\Models\Categoria;
 
 class ProductoController extends Controller
 {
     // index() — listar todos 
     public function index() {
-        $productos = Producto::all();
+        $productos = Producto::with('categoria')->get();
         return view('productos.index', compact('productos'));
     }
 
     // create() — mostrar formulario de creación 
     public function create() {
-        // Solo necesita retornar la vista del formulario vacío
-        return view('productos.create');
+        // Solo necesita retornar la vista del formulario 
+        $categorias = Categoria::all();
+        return view('productos.create', compact('categorias'));
     }
 
     // store() — guardar nuevo 
