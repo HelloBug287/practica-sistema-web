@@ -6,11 +6,7 @@
 </head>
 <body>
     <h1>Gestión de Productos</h1>
-    
-    <a href="{{ route('productos.create') }}">Crear Nuevo Producto</a>
-    <br><br>
-
-    <div style="text-align: right; margin-bottom: 20px;">
+        <div style="text-align: right; margin-bottom: 20px;">
     <span>Bienvenido, <strong>{{ Auth::user()->name }}</strong> ({{ Auth::user()->rol }})</span>
     
     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
@@ -20,6 +16,11 @@
         </button>
     </form>
 </div>
+    
+    <a href="{{ route('productos.create') }}">Crear Nuevo Producto</a>
+    <br><br>
+
+
 
     <table border="1">
         <thead>
