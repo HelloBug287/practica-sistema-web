@@ -20,6 +20,19 @@
     <a href="{{ route('productos.create') }}">Crear Nuevo Producto</a>
     <br><br>
 
+    <div class="row mb-3">
+    <div class="col-md-6">
+        <form method="GET" action="{{ route('productos.index') }}" class="d-flex">
+            <input type="text" name="search" 
+            value="{{ $search ?? '' }}" 
+            class="form-control me-2" 
+            placeholder="Buscar por nombre o descripción...">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="{{ route('productos.index') }}" class="btn btn-secondary ms-2">Limpiar</a>
+        </form>
+    </div>
+</div>
+
 
 
     <table border="1">
@@ -56,5 +69,13 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="mt-4">
+    {{ $productos->appends(['search' => $search])->links() }}
+
+    <p class="text-muted">
+        Mostrando {{ $productos->count() }} de {{ $productos->total() }} productos
+    </p>
+</div>
 </body>
 </html>
