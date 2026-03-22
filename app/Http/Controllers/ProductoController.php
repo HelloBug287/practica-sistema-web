@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Http\Requests\ProductRequest;
 use App\Models\Categoria;
+use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
     // index() — listar todos 
-    public function index() {
-        $productos = Producto::with('categoria')->get();
-        return view('productos.index', compact('productos'));
+    public function index(Request $request) {
+        $search = $request->input('search');
+
+        $productos = Producto::with('categoria')
+        ->when($search, function ($query, $search){
+            $query->where('nombre', 'LIKE', '%' . $search . '%')
+            ->orWhere('descripcion', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(10);
+        return view('productos.index', compact('productos', 'search'));
     }
 
     // create() — mostrar formulario de creación 

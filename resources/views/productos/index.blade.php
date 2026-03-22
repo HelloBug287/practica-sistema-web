@@ -28,6 +28,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Categoria</th>
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Acciones</th>
