@@ -45,6 +45,7 @@
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Acciones</th>
+                <th>Imagen</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +65,13 @@
                         @method('DELETE')
                         <button type="submit">Eliminar</button>
                     </form>
+                </td>
+                <td>
+                    @if($producto->imagen)
+                        <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" width="60">
+                    @else
+                        <span>Sin imagen</span>
+                    @endif
                 </td>
             </tr>
             @endforeach

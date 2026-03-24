@@ -20,7 +20,7 @@
     <a href="{{ route('productos.index') }}">Volver al listado</a>
     <br><br>
 
-    <form method="POST" action="{{ route('productos.store') }}">
+    <form method="POST" action="{{ route('productos.store') }}" enctype="multipart/form-data">
         @csrf
         
         <div>
@@ -61,6 +61,15 @@
             <label for="stock">Stock:</label><br>
             <input type="number" id="stock" name="stock" placeholder="Stock" required value="{{ old('stock') }}">
             @error('stock')
+                <br><span style="color:red;">{{ $message }}</span>
+            @enderror
+        </div>
+        <br>
+
+        <div>
+            <label for="imagen">Imagen del Producto:</label><br>
+            <input type="file" id="imagen" name="imagen" accept="image/*">
+            @error('imagen')
                 <br><span style="color:red;">{{ $message }}</span>
             @enderror
         </div>

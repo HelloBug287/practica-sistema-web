@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Http\Requests\ProductRequest;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -31,13 +32,13 @@ class ProductoController extends Controller
 
     // store() — guardar nuevo 
     public function store(ProductRequest $request) {
-        $request->validate([
-            'nombre' => 'required|string|max:100',
-            'precio' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'descripcion' => 'nullable|string|max:500',
-        ]);
-        Producto::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('imagen')){
+            $data['imagen'] = $request->file('imagen')->store('productos', 'public');
+        }
+
+        Producto::create($data);
         return redirect()->route('productos.index')
                 ->with('success', 'Producto creado exitosamente.');
     }
@@ -56,19 +57,24 @@ class ProductoController extends Controller
 
     // update() — actualizar en la base de datos 
     public function update(ProductRequest $request, Producto $producto) {
-        $request->validate([
-            'nombre' => 'required|string|max:100',
-            'precio' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'descripcion' => 'nullable|string|max:500',
-        ]);
-        $producto->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('imagen')) {
+            if ($producto->imagen){
+                Storage::disk('public')->delete($producto->imagen);
+            }
+            $data['imagen'] = $request->file('imagen')->store('productos', 'public');
+        }
+        $producto->update($data);
         return redirect()->route('productos.index')
                 ->with('success', 'Producto actualizado exitosamente.');
     }
 
     // destroy() — eliminar de la base de datos 
     public function destroy(Producto $producto) {
+        if ($producto->imagen){
+            Storage::disk('public')->delete($producto->imagen);
+        }
         $producto->delete();
         return redirect()->route('productos.index')
                 ->with('success', 'Producto eliminado exitosamente.');

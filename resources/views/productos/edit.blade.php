@@ -19,7 +19,8 @@
     <a href="{{ route('productos.index') }}">Volver al listado</a>
     <br><br>
 
-    <form method="POST" action="{{ route('productos.update', $producto->id) }}">
+    {{-- Paso 5: Agregar enctype='multipart/form-data' para permitir subida de archivos --}}
+    <form method="POST" action="{{ route('productos.update', $producto->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -66,6 +67,23 @@
             <label for="stock">Stock:</label><br>
             <input type="number" id="stock" name="stock" value="{{ old('stock', $producto->stock) }}" required>
             @error('stock')
+                <br><span style="color:red;">{{ $message }}</span>
+            @enderror
+        </div>
+        <br>
+
+        <div>
+            <label>Imagen actual:</label><br>
+            @if($producto->imagen)
+                <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" width="150" style="margin-bottom: 10px;">
+                <br>
+            @else
+                <p>Este producto no tiene imagen cargada.</p>
+            @endif
+
+            <label for="imagen">Cambiar imagen:</label><br>
+            <input type="file" id="imagen" name="imagen" accept="image/*">
+            @error('imagen')
                 <br><span style="color:red;">{{ $message }}</span>
             @enderror
         </div>
